@@ -1,0 +1,38 @@
+.table-page {
+    font-family: monospace;
+    background: -webkit-linear-gradient(to right, #000046, #1cb5e0);
+    background: linear-gradient(to right, #000046, #1cb5e0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+.table-container {
+    width: 90%;
+    max-width: 800px;
+    background-color: #00000079;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+.Record-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+.Record-table thead {
+    background-color: #222;
+    color: #fff;
+}
+.Record-table th, .Record-table td {
+    padding: 12px 15px;
+    text-align: left;
+    color: #fff;
+    border: 1px solid #444;
+}
+.Record-table tbody tr:hover {
+    background-color: #423838;
+    transition: background-color 0.3s ease;
+}
