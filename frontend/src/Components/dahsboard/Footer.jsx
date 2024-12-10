@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import './styles.css';
 import 'remixicon/fonts/remixicon.css';

@@ -15,7 +15,7 @@ function Marking(){
         // Cleanup function to stop webcam stream
         return () => {
             if (webcamRef.current) {
-                const videoElement = webcamRef.current.video; // Get the video element from the webcamRef
+                const videoElement = webcamRef.current.video; 
                 if (videoElement && videoElement.srcObject) {
                     const stream = videoElement.srcObject;
                     const tracks = stream.getTracks();

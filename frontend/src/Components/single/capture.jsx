@@ -57,9 +57,9 @@ function CaptureFace() {
         axios.post('http://localhost:5000/generate-embedding', data)
             .then((response) => {
                 alert('Registration successful');
-                // setTimeout(() => {
-                //     navigate("/register")
-                // },2000)
+                setTimeout(() => {
+                    navigate("/mark")
+                },2000)
             })
             .catch((error) => {
                 console.error("Error:", error);
