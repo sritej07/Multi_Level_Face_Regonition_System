@@ -8,21 +8,23 @@ import { Link } from 'react-router-dom';
 const Home = () => {
 
   gsap.registerPlugin(ScrollTrigger)
-
-  useGSAP(()=> {
-    gsap.from(".homepage-item",{
-      opacity:0,
-      y:50,
-      scrollTrigger:{
-        trigger:".homepage-grid",
-        scroller:"body",
-        start:"top 80%",
+  useGSAP(() => {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".homepage-grid",
+        scroller: "body",
+        start: "top 80%", 
         end: "top 20%",
-        scrub:1,
-        stagger:0.3
-      }
-    })
-  })
+        scrub: 1,        
+      },
+    });
+
+    tl.from(".homepage-item", {
+      opacity: 0,
+      stagger: 0.3, 
+      duration: 0.6,
+    });
+  }, []);
 
   return (
     <section id="homepage" className="homepage">

@@ -27,6 +27,7 @@ export default function Crowd() {
     socket.on('connect_error', (error) => {
       console.error('Connection Error:', error);
       setError('Failed to connect to the server. Please try again.');
+      alert('Failed to connect to the server. Please try again.')
     });
 
     socket.on('frame_update', (data) => {
@@ -73,11 +74,11 @@ export default function Crowd() {
                 Stop Stream
               </button>
             </div>
-            {error && (
+            {/* {error && (
               <div className="error-message">
                 <p>{error}</p>
               </div>
-            )}
+            )} */}
           </div>
         </div>
     </div>

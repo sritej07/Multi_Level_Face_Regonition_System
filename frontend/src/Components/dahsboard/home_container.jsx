@@ -1,5 +1,3 @@
-// 
-
 import React, { useRef } from "react";
 import Navbar from "./Navbar";
 import About from "./About";
@@ -13,10 +11,13 @@ import String from "./string";
 
 function Homepage() {
 
-
-
-
-
+  useGSAP(() => {
+    gsap.from(".logo h1,.elements h4,.elements button",{
+        y:-30,
+        opacity:0,
+        stagger:0.3
+    })
+})
 
   return (
     <>
