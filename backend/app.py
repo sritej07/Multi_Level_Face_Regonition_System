@@ -12,6 +12,12 @@ from mtcnn import MTCNN
 from scipy.spatial.distance import cosine
 import torch
 import cv2
+from flask_cors import CORS
+from flask_socketio import SocketIO
+import base64
+import time
+import threading
+
 
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array
@@ -141,5 +147,60 @@ def compare_faces():
 
 
 
+# ************************************
+
+#crowd counting
+
+socketio = SocketIO(app, cors_allowed_origins="*")
+
+
+yolo_model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
+yolo_model.eval()
+
+# Global variables for webcam streaming
+is_capturing = False
+cap = None
+capture_thread = None
+
+def process_frame(frame):
+    results = yolo_model(frame)
+    persons = results.pandas().xyxy[0]
+    persons = persons[persons['name'] == 'person']
+    count = len(persons)
+    for _, row in persons.iterrows():
+        cv2.rectangle(frame, (int(row['xmin']), int(row['ymin'])), (int(row['xmax']), int(row['ymax'])), (255, 0, 0), 2)
+    # cv2.putText(frame, f'Count: {count}', (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+    return frame, count
+
+def capture_frames():
+    global is_capturing, cap
+    while is_capturing:
+        ret, frame = cap.read()
+        if ret:
+            frame, count = process_frame(frame)
+            _, buffer = cv2.imencode('.jpg', frame)
+            frame_bytes = base64.b64encode(buffer).decode('utf-8')
+            socketio.emit('frame_update', {'frame': frame_bytes, 'count': count})
+        time.sleep(1)
+
+@socketio.on('start_stream')
+def start_stream():
+    global is_capturing, cap, capture_thread
+    if not is_capturing:
+        cap = cv2.VideoCapture(0)
+        is_capturing = True
+        capture_thread = threading.Thread(target=capture_frames)
+        capture_thread.start()
+
+@socketio.on('stop_stream')
+def stop_stream():
+    global is_capturing, cap
+    is_capturing = False
+    if cap:
+        cap.release()
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    socketio.run(app, debug=True, port=5000, allow_unsafe_werkzeug=True)
+
+
