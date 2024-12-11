@@ -74,11 +74,6 @@ export default function Crowd() {
                 Stop Stream
               </button>
             </div>
-            {/* {error && (
-              <div className="error-message">
-                <p>{error}</p>
-              </div>
-            )} */}
           </div>
         </div>
     </div>
