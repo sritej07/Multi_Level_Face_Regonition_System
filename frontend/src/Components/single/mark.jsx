@@ -10,6 +10,7 @@ function Marking(){
     const webcamRef = useRef(null);
     const [message, setMessage] = useState('');
     const [model,setModel] = useState('facenet')
+    const [roll,setRoll]=useState();
 
     useEffect(() => {
         // Cleanup function to stop webcam stream
@@ -51,6 +52,7 @@ function Marking(){
                 const response = await axios.post('http://localhost:5000/recognize', {
                     image: imageSrc.split(',')[1], // Get base64 image data
                     model:model,
+                    roll:roll
                 },{
                     headers: {
                         'Content-Type': 'application/json'
@@ -95,6 +97,11 @@ function Marking(){
                     <option value="facenet">Pretrained-Model</option>
                     <option value="custom">Custom-CNN</option>
                 </select>
+                <label for="rollno" style={{color:"black"}}>Rollnumber</label>
+                <input type="text" id="rollno" required 
+                onChange={(e)=>{
+                    setRoll(e.target.value)
+                }}  ></input>
                 <button onClick={capture} className="capture-button">Capture</button>
             </div>
         </div>

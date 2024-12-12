@@ -54,7 +54,11 @@ function CaptureFace() {
         
         const data = { name, roll, image: imageSrc };
         
-        axios.post('http://localhost:5000/generate-embedding', data)
+        axios.post('http://localhost:5000/register', JSON.stringify(data),{
+            headers:{
+                'Content-Type':'application/json'
+            }
+        })
             .then((response) => {
                 alert('Registration successful');
                 setTimeout(() => {
