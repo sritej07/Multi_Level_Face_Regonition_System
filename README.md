@@ -49,9 +49,9 @@ A comprehensive face recognition system designed for individual and group authen
 To run the application locally, follow these instructions:
 
 ### 🖥️ Frontend
-npm run dev
-🔙 Backend
--For single-face detection and crowd counting:
-python app.py
--For multi-face detection and group authentication:
-nodemon server.js
+```bash npm run dev ``` 
+### 🔙 Backend
+# For single-face detection and crowd counting:
+```python app.py```
+# For multi-face detection and group authentication:
+```nodemon server.js```
